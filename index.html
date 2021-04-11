@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Test</title>
+</head>
+<body>
+
+    <form name="registration">
+        <input type="text" name="name"/>
+        <input type="email" name="email"/>
+        <input type="text" name="birthdate" id="birthdate"/>
+        <input type="password" name="password"/>
+        <input type="submit" value="Entrar"/>
+    </form>
+    
+
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        IMask( document.getElementById('birthdate'), {mask:'00/00/0000'} );
+        const form = document.forms.registration
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const { name, email, password, birthdate } = form
+            if(name.value && email.value && birthdate.value && password.value) {
+                // Validações
+                if(name.value.length < 3) {
+                    alert('O campo nome precisa ter pelo menos 3 caracteres.')
+                    return
+                }
+
+                let newBirthdate = birthdate.value.split('/')
+                if(newBirthdate.length != 3) {
+                    alert('Data inválida!')
+                    return
+                }
+
+                if(password.value.length < 6 || password.value.length > 20) {
+                    alert('O campo password precisa ter entre 6 a 20 caracteres.')
+                    return
+                }
+
+                alert('Enviar formulário')
+                console.log({
+                    name: name.value,
+                    email: email.value,
+                    birthdate: birthdate.value,
+                    password:password.value
+                })
+
+            } else {
+                alert('Preencha todos os campos')
+            }
+        })
+    </script>
+</body>
+</html>
